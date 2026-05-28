@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA – Artistic Unique Resin Aesthetics</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-pale: #F7EFD8;
+    --cream: #FAF6EF;
+    --cream-dark: #F0E9D9;
+    --charcoal: #2A2318;
+    --charcoal-mid: #4A3F30;
+    --charcoal-light: #7A6B55;
+    --white: #FEFDFB;
+    --rose: #C4886E;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,246,239,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gold-light);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    letter-spacing: 0.12em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--charcoal-mid);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--white);
+    padding: 0.5rem 1.2rem;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--charcoal); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--charcoal); transition: 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 80px 5% 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 70% 50%, var(--gold-pale) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 32px; height: 1px;
+    background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--charcoal);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 0.95rem;
+    color: var(--charcoal-light);
+    line-height: 1.8;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--charcoal); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--charcoal);
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--charcoal);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-outline:hover { background: var(--charcoal); color: var(--white); }
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .hero-ornament {
+    width: min(420px, 45vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: conic-gradient(from 135deg, var(--gold-pale), var(--cream-dark), var(--gold-light), var(--cream), var(--gold-pale));
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-ornament::after {
+    content: '';
+    position: absolute; inset: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-light);
+  }
+  .hero-ornament-inner {
+    text-align: center;
+  }
+  .hero-logo-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--charcoal);
+  }
+  .hero-logo-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 0.3rem;
+  }
+  .hero-stats {
+    display: flex; gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--gold-light);
+  }
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-lbl {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal-light);
+    margin-top: 0.2rem;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    background: var(--charcoal);
+    padding: 0.9rem 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .marquee-dot { color: var(--gold); margin-right: 3rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 5%; }
+  .section-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-sub {
+    font-size: 0.9rem;
+    color: var(--charcoal-light);
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 3rem;
+  }
+
+  /* PRODUCTS */
+  #products { background: var(--white); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+  }
+  .product-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+  }
+  .product-card:hover {
+    background: var(--white);
+    border-color: var(--gold-light);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.15);
+    z-index: 2;
+  }
+  .product-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    border: 1px solid var(--gold-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 0.5rem;
+  }
+  .product-desc {
+    font-size: 0.82rem;
+    color: var(--charcoal-light);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+  }
+  .product-order-btn {
+    display: inline-block;
+    padding: 0.55rem 1.4rem;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .product-order-btn:hover { background: var(--gold); color: var(--white); }
+  .product-badge {
+    position: absolute; top: 1rem; right: 1rem;
+    background: var(--gold);
+    color: var(--white);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* HOW IT WORKS */
+  #how { background: var(--cream); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
+  .step { text-align: center; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 0.5rem;
+  }
+  .step-desc { font-size: 0.82rem; color: var(--charcoal-light); line-height: 1.7; }
+  .step-line {
+    height: 1px; background: var(--gold-light);
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  /* ORDER FORM */
+  #order { background: var(--charcoal); }
+  #order .section-eyebrow { color: var(--gold-light); }
+  #order .section-eyebrow::before { background: var(--gold-light); }
+  #order .section-title { color: var(--white); }
+  #order .section-title em { color: var(--gold); }
+  #order .section-sub { color: rgba(255,255,255,0.55); }
+  .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--white);
+    padding: 0.85rem 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-select option { background: var(--charcoal); color: var(--white); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--rose); }
+  .order-info-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2.5rem;
+  }
+  .order-info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .info-item {
+    display: flex; gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+  }
+  .info-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .info-text-title { font-size: 0.82rem; color: rgba(255,255,255,0.9); font-weight: 500; margin-bottom: 0.2rem; }
+  .info-text-sub { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
+  .info-link { color: var(--gold); text-decoration: none; }
+  .info-link:hover { text-decoration: underline; }
+  .social-row { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+  .social-btn {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--white); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .testimonial-card {
+    background: var(--cream);
+    padding: 2rem;
+    border-left: 2px solid var(--gold);
+    position: relative;
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .testimonial-author { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+  .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 0.8rem; letter-spacing: 2px; }
+
+  /* FOOTER */
+  footer {
+    background: #1A150D;
+    padding: 4rem 5% 2rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    margin-bottom: 2rem;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+  }
+  .footer-brand-tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .footer-brand-desc { font-size: 0.82rem; line-height: 1.8; max-width: 300px; }
+  .footer-col-title {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.6rem; }
+  .footer-links a { text-decoration: none; color: rgba(255,255,255,0.45); font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; flex-wrap: gap;
+  }
+
+  /* SUCCESS MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65); z-index: 999;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--cream);
+    padding: 3rem; max-width: 480px; width: 90%;
+    text-align: center;
+  }
+  .modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 400;
+    color: var(--charcoal); margin-bottom: 0.8rem;
+  }
+  .modal-sub { font-size: 0.88rem; color: var(--charcoal-light); line-height: 1.7; margin-bottom: 1.5rem; }
+  .modal-close {
+    background: var(--gold); color: var(--white);
+    border: none; padding: 0.7rem 2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
+    .hero-visual { display: none; }
+    .hero-sub { margin: 0 auto 2.5rem; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .order-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    nav { padding: 0 4%; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 4rem 4%; }
+    .section-title { font-size: 2rem; }
+    .hero-title { font-size: 2.5rem; }
+    .products-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">AURA<span>✦</span></a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#order">Contact</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Order Now</a>
+  <div class="hamburger" onclick="toggleMenu(this)">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:80px;">
+  <div class="hero-text fade-up">
+    <div class="hero-eyebrow">Winnipeg, Canada &nbsp;·&nbsp; Handcrafted Resin Art</div>
+    <h1 class="hero-title">
+      One Piece,<br>
+      One <em>Emotion</em>
+    </h1>
+    <p class="hero-sub">
+      Meaningful gifts crafted in resin — personalized keychains, couple castings, sonogram pendants, gift hampers & more. Every piece holds a memory forever.
+    </p>
+    <div class="hero-actions">
+      <a href="#order" class="btn-primary">Order Custom Piece</a>
+      <a href="#products" class="btn-outline">Explore Products</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">110+</div>
+        <div class="hero-stat-lbl">Creations</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">579</div>
+        <div class="hero-stat-lbl">Followers</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-lbl">Handcrafted</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual fade-up delay-2">
+    <div class="hero-ornament">
+      <div class="hero-ornament-inner">
+        <div class="hero-logo-big">AURA</div>
+        <div class="hero-logo-tagline">Artistic Unique Resin Aesthetics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Resin Art <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Personalized Gifts <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Couple Casting <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Gift Hampers <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Custom Pendants <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Winnipeg Canada <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">DM to Order <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Crafting is Therapy <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Resin Art <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Personalized Gifts <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Couple Casting <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Gift Hampers <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Custom Pendants <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Winnipeg Canada <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">DM to Order <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Crafting is Therapy <span class="marquee-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-eyebrow fade-up">Our Collection</div>
+  <h2 class="section-title fade-up">Every Gift, <em>Unforgettable</em></h2>
+  <p class="section-sub fade-up">Handcrafted resin pieces made with intention. Each order is unique — your memories, your names, your story cast in art.</p>
+  <div class="products-grid">
+
+    <div class="product-card fade-up">
+      <div class="product-badge">Most Popular</div>
+      <div class="product-icon">💍</div>
+      <div class="product-name">Custom Keychains</div>
+      <p class="product-desc">Resin keychains with names, initials, flowers, or photos. Dark, glitter, floral — you choose the vibe.</p>
+      <div class="product-price">Starting from $12 CAD</div>
+      <a href="#order" class="product-order-btn">Order This</a>
+    </div>
+
+    <div class="product-card fade-up delay-1">
+      <div class="product-icon">🤝</div>
+      <div class="product-name">Couple Casting</div>
+      <p class="product-desc">Preserve your hands locked together forever in a beautiful golden resin cast. A gift unlike any other.</p>
+      <div class="product-price">Custom Quote</div>
+      <a href="#order" class="product-order-btn">Get a Quote</a>
+    </div>
+
+    <div class="product-card fade-up delay-2">
+      <div class="product-icon">👶</div>
+      <div class="product-name">Baby Casting</div>
+      <p class="product-desc">Tiny hands and feet immortalized in gold resin with dried flowers. A keepsake for a lifetime.</p>
+      <div class="product-price">Custom Quote</div>
+      <a href="#order" class="product-order-btn">Enquire Now</a>
+    </div>
+
+    <div class="product-card fade-up">
+      <div class="product-icon">🔬</div>
+      <div class="product-name">Sonogram Pendant</div>
+      <p class="product-desc">Keep your miracle close to your heart — ultrasound scan set in a beautiful oval resin pendant.</p>
+      <div class="product-price">Starting from $20 CAD</div>
+      <a href="#order" class="product-order-btn">Order This</a>
+    </div>
+
+    <div class="product-card fade-up delay-1">
+      <div class="product-badge">New</div>
+      <div class="product-icon">🌸</div>
+      <div class="product-name">Dried Flower Trays</div>
+      <p class="product-desc">Turn your special dried flowers into timeless resin art. Preserve wedding blooms, gifted roses & more.</p>
+      <div class="product-price">Starting from $25 CAD</div>
+      <a href="#order" class="product-order-btn">Order This</a>
+    </div>
+
+    <div class="product-card fade-up delay-2">
+      <div class="product-icon">🎁</div>
+      <div class="product-name">Gift Hampers</div>
+      <p class="product-desc">Curated hampers combining resin keepsakes, chocolates, flowers & more. Perfect for any occasion.</p>
+      <div class="product-price">Starting from $35 CAD</div>
+      <a href="#order" class="product-order-btn">Build a Hamper</a>
+    </div>
+
+    <div class="product-card fade-up">
+      <div class="product-icon">💡</div>
+      <div class="product-name">MOM / Name Lights</div>
+      <p class="product-desc">Illuminated letter lamps with resin details — stunning Mother's Day, birthday, and anniversary gifts.</p>
+      <div class="product-price">Starting from $30 CAD</div>
+      <a href="#order" class="product-order-btn">Order This</a>
+    </div>
+
+    <div class="product-card fade-up delay-1">
+      <div class="product-icon">🐾</div>
+      <div class="product-name">Pet ID Tags</div>
+      <p class="product-desc">Adorable resin pet tags with your fur baby's name. Glittery, colorful, durable — they'll love it (you will too).</p>
+      <div class="product-price">Starting from $10 CAD</div>
+      <a href="#order" class="product-order-btn">Order This</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-eyebrow fade-up">The Process</div>
+  <h2 class="section-title fade-up">How to <em>Order</em></h2>
+  <p class="section-sub fade-up">Ordering a custom resin piece is simple. Here's exactly how it works from start to finish.</p>
+  <div class="steps">
+    <div class="step fade-up">
+      <div class="step-num">01</div>
+      <div class="step-title">Choose & Enquire</div>
+      <p class="step-desc">Browse the collection above or DM on Instagram. Tell us what product you want and any personalization details — names, photos, dates, colors.</p>
+    </div>
+    <div class="step fade-up delay-1">
+      <div class="step-num">02</div>
+      <div class="step-title">Confirm & Pay</div>
+      <p class="step-desc">We'll send you a quote. Once confirmed, a small advance secures your order. Payment via e-transfer, UPI, or agreed method.</p>
+    </div>
+    <div class="step fade-up delay-2">
+      <div class="step-num">03</div>
+      <div class="step-title">Craft & Preview</div>
+      <p class="step-desc">Your piece is handcrafted with care. We share a preview before finalizing — your satisfaction comes first.</p>
+    </div>
+    <div class="step fade-up delay-3">
+      <div class="step-num">04</div>
+      <div class="step-title">Deliver with Love</div>
+      <p class="step-desc">Pickup available in Winnipeg or we'll arrange shipping. Your piece arrives beautifully packaged, ready to gift or keep.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order">
+  <div class="section-eyebrow fade-up">Start Your Order</div>
+  <h2 class="section-title fade-up">Let's Create <em>Something</em> Beautiful</h2>
+  <p class="section-sub fade-up">Fill in the form below and we'll be in touch within 24 hours. Or reach us directly on Instagram or email.</p>
+  <div class="order-grid">
+    <form id="orderForm" onsubmit="handleSubmit(event)">
+      <div class="form-group fade-up">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="Enter your full name" required>
+      </div>
+      <div class="form-group fade-up delay-1">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group fade-up delay-1">
+        <label class="form-label">Phone / Instagram Handle</label>
+        <input type="text" class="form-input" placeholder="Phone number or @yourhandle">
+      </div>
+      <div class="form-group fade-up delay-2">
+        <label class="form-label">Product You're Interested In</label>
+        <select class="form-select form-input" required>
+          <option value="" disabled selected>Select a product</option>
+          <option>Custom Keychains / Pendants</option>
+          <option>Couple Casting</option>
+          <option>Baby Casting</option>
+          <option>Sonogram Pendant</option>
+          <option>Dried Flower Tray / Art</option>
+          <option>Gift Hamper</option>
+          <option>MOM / Name Light</option>
+          <option>Pet ID Tag</option>
+          <option>Other / Multiple Items</option>
+        </select>
+      </div>
+      <div class="form-group fade-up delay-2">
+        <label class="form-label">Tell Us About Your Order</label>
+        <textarea class="form-textarea" placeholder="Names, colors, occasion, special details... the more you share, the more personal we can make it ✨" required></textarea>
+      </div>
+      <button type="submit" class="form-submit fade-up delay-3">Send My Order Request ✦</button>
+    </form>
+
+    <div class="order-info-card fade-up delay-1">
+      <div class="order-info-title">Reach Us Directly</div>
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div>
+          <div class="info-text-title">Email</div>
+          <a href="mailto:artinmotion2129@gmail.com" class="info-link info-text-sub">artinmotion2129@gmail.com</a>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-text-title">Location</div>
+          <div class="info-text-sub">Winnipeg, Manitoba, Canada</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">⏱</div>
+        <div>
+          <div class="info-text-title">Response Time</div>
+          <div class="info-text-sub">Usually within 24 hours</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🚚</div>
+        <div>
+          <div class="info-text-title">Delivery</div>
+          <div class="info-text-sub">Pickup in Winnipeg · Shipping available</div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="https://www.instagram.com/auraan29" target="_blank" class="social-btn">📸 Instagram</a>
+        <a href="https://www.youtube.com/@Auraan29" target="_blank" class="social-btn">▶ YouTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-eyebrow fade-up">Client Love</div>
+  <h2 class="section-title fade-up">What People Are <em>Saying</em></h2>
+  <p class="section-sub fade-up">Real feedback from real customers who trusted AURA with their most meaningful moments.</p>
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-quote">"Got a custom keychain with my husband's name — absolutely stunning. The craftsmanship is unreal. Will be ordering again for our anniversary!"</p>
+      <div class="testimonial-author">— Priya S., Winnipeg</div>
+    </div>
+    <div class="testimonial-card fade-up delay-1">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-quote">"The sonogram pendant made my friend cry happy tears. Such a thoughtful and unique baby shower gift. Nandini is incredibly talented."</p>
+      <div class="testimonial-author">— Meera K., Toronto</div>
+    </div>
+    <div class="testimonial-card fade-up delay-2">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-quote">"Ordered a couple casting and it turned out better than I ever imagined. Perfect way to celebrate our first anniversary. Highly recommend!"</p>
+      <div class="testimonial-author">— Ravi & Ananya</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">AURA</div>
+      <div class="footer-brand-tag">Artistic Unique Resin Aesthetics</div>
+      <p class="footer-brand-desc">Crafting memories into forever pieces. Each resin creation is handmade with love by Nandini Thakur in Winnipeg, Canada.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#order">Order Now</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/auraan29" target="_blank">Instagram @auraan29</a></li>
+        <li><a href="https://www.youtube.com/@Auraan29" target="_blank">YouTube @Auraan29</a></li>
+        <li><a href="mailto:artinmotion2129@gmail.com">artinmotion2129@gmail.com</a></li>
+        <li><a href="#">Winnipeg, Canada</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AURA Resin Art · All Rights Reserved</span>
+    <span>Made with love in Winnipeg ✦</span>
+  </div>
+</footer>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">✨</div>
+    <div class="modal-title">Order Request Sent!</div>
+    <p class="modal-sub">Thank you! Nandini will be in touch within 24 hours to discuss your custom piece. Check your inbox (and spam just in case).</p>
+    <button class="modal-close" onclick="closeModal()">Perfect, Thanks!</button>
+  </div>
+</div>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('successModal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('successModal').classList.remove('active');
+  document.getElementById('orderForm').reset();
+}
+function toggleMenu(el) {
+  el.classList.toggle('open');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
